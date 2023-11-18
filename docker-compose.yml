@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  spark:
+    build: Spark/.
+    networks:
+      - my_network
+    ports:
+      - "8888:8888"
+      - "4040-4049:4040-4049"
+      
+  postgis:
+    build: PostgreSQL/.
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - my_network
+    ports:
+      - "5432:5432"
+
+  mongo:
+    build: MongoDB/.
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=erick
+      - MONGO_INITDB_ROOT_PASSWORD=1234567
+    networks:
+      - my_network
+    ports:
+      - "27017:27017"
+
+networks:
+  my_network:
